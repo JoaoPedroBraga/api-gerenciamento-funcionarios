@@ -1,6 +1,9 @@
 const {employeeModel} = require('./../config/module/employee.model.js')
 
 createEmployee = async (req, res) => {
+    if (!req.body.id){
+        return res.status(400).json({ message: "O campo ID e obrigtório"})   
+    }
     if (!req.body.nome){
         return res.status(400).json({ message: "O campo Nome e obrigtório"})   
     }
@@ -31,6 +34,7 @@ createEmployee = async (req, res) => {
     }
 
     const employee = await employeeModel.create({
+        id: req.body.id,
         nome: req.body.nome,
         nascimento: req.body.nascimento,
         telefone:req.body.telefone,
@@ -47,4 +51,19 @@ getEmployee = async (req, res) => {
     return  res.status(200).json(funcionarios);
 }
 
-module.exports = { getEmployee, createEmployee }
+
+getOneEmployee = async (req, res) => {
+    try {
+        const employee = await employeeModel.findOne({id: req.params.id});
+        return  res.status(200).json(employee);
+    }catch (erro) { 
+        return res.status(400).json({
+            message:'Não foi possivel encontrar ID'
+        });
+    }
+}
+
+
+
+
+module.exports = { getEmployee, createEmployee, getOneEmployee, updateEmployee }
