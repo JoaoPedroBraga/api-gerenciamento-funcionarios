@@ -25,6 +25,11 @@ createEmployee = async (req, res) => {
         return res.status(200).json({ message:"Informação Cadastrada"});
     }
 
+    const classExisente = await employeeModel.find({ nome: req.body.nome});
+    if (classExisente.length) {
+        return res.status(200).json({ message:"Informação Cadastrada"});
+    }
+
     const employee = await employeeModel.create({
         nome: req.body.nome,
         nascimento: req.body.nascimento,
