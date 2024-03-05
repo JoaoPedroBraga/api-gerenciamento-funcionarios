@@ -64,6 +64,11 @@ getOneEmployee = async (req, res) => {
 }
 
 
+updateEmployee = async (req, res) => {  
 
+    const employee = await employeeModel.updateOne({id: req.params.id}, req.body);
+
+    return  res.status(200).json(employee);
+}
 
 module.exports = { getEmployee, createEmployee, getOneEmployee, updateEmployee }
