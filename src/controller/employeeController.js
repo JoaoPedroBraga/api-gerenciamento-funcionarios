@@ -23,14 +23,9 @@ createEmployee = async (req, res) => {
         return res.status(400).json({ message: "O campo Setor e obrigtório"})   
     }
 
-    const employeeExisente = await employeeModel.find({nome: req.body.nome});
-    if (employeeExisente.length) {
-        return res.status(200).json({ message:"Informação Cadastrada"});
-    }
-
-    const classExisente = await employeeModel.find({ nome: req.body.nome});
+    const classExisente = await employeeModel.find({ nome: req.body.nome, id: req.body.id});
     if (classExisente.length) {
-        return res.status(200).json({ message:"Informação Cadastrada"});
+        return res.status(200).json({ message:"Informação Nome ou ID Cadatsrado"});
     }
 
     const employee = await employeeModel.create({
@@ -71,4 +66,12 @@ updateEmployee = async (req, res) => {
     return  res.status(200).json(employee);
 }
 
-module.exports = { getEmployee, createEmployee, getOneEmployee, updateEmployee }
+deleteElployee = async (req, res) => {
+    const employee = await employeeModel.deleteOne({id: req.params.id});
+
+    return res.status(200).json({
+        data: employee
+    });
+}
+
+module.exports = { getEmployee, createEmployee, getOneEmployee, updateEmployee, deleteElployee }
