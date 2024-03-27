@@ -25,7 +25,7 @@ createEmployee = async (req, res) => {
 
     const classExisente = await employeeModel.find({ nome: req.body.nome, id: req.body.id});
     if (classExisente.length) {
-        return res.status(200).json({ message:"Informação Nome ou ID Cadatsrado"});
+        return res.status(200).json({ message:"O Nome ou ID Cadatsrado"});
     }
 
     const employee = await employeeModel.create({
